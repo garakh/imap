@@ -19,7 +19,7 @@ class Connection
      * Constructor
      *
      * @param resource $resource
-     * @param string   $server
+     * @param string $server
      *
      * @throws \InvalidArgumentException
      */
@@ -75,7 +75,7 @@ class Connection
             throw new MailboxDoesNotExistException($name);
         }
 
-        return new Mailbox($this->server . imap_utf7_encode($name), $this);
+        return new Mailbox($this->server . ImapUtf7::encode($name), $this);
     }
 
     /**
@@ -122,9 +122,10 @@ class Connection
     public function deleteMailbox(Mailbox $mailbox)
     {
         if (false === imap_deletemailbox(
-            $this->resource,
-            $this->server . $mailbox->getName()
-        )) {
+                $this->resource,
+                $this->server . $mailbox->getName()
+            )
+        ) {
             throw new Exception('Mailbox ' . $mailbox->getName() . ' could not be deleted');
         }
 
@@ -143,18 +144,29 @@ class Connection
 
     /**
      * Get mailbox names
-     * 
+     *
      * @return array
      */
-    private function getMailboxNames()
+//    private function getMailboxNames()
+//    {
+//        if (null === $this->mailboxNames) {
+//            $mailboxes = imap_getmailboxes($this->resource, $this->server, '*');
+//            foreach ($mailboxes as $mailbox) {
+//                $this->mailboxNames[] = imap_utf7_decode(str_replace($this->server, '', $mailbox->name));
+//            }
+//        }
+//
+//        return $this->mailboxNames;
+//    }
+
+    public function getMailboxNames() //public cause it's useful
     {
         if (null === $this->mailboxNames) {
-            $mailboxes = imap_getmailboxes($this->resource, $this->server, '*');
+            $mailboxes = imap_list($this->resource, $this->server, '*');
             foreach ($mailboxes as $mailbox) {
-                $this->mailboxNames[] = imap_utf7_decode(str_replace($this->server, '', $mailbox->name));
+                $this->mailboxNames[] = ImapUtf7::decode(str_replace($this->server, '', $mailbox));
             }
         }
-
         return $this->mailboxNames;
     }
 }
