@@ -19,8 +19,25 @@ is installed. For instance on Debian:
 
 The recommended way to install the IMAP library is through [Composer](http://getcomposer.org):
 
+```json
+add to composer.json
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/garakh/imap"
+        }
+		],
+    "require": {
+        "ddeboer/imap": "dev-mw",
+        }
+```
+Then install with composer cli:
 ```bash
-$ composer require ddeboer/imap
+# composer install
+```
+or
+```bash
+# composer update
 ```
 
 This command requires you to have Composer installed globally, as explained
