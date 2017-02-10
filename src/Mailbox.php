@@ -1,7 +1,7 @@
 <?php
 
 namespace Ddeboer\Imap;
-
+use Ddeboer\Imap\ImapUtf7;
 /**
  * An IMAP mailbox (commonly referred to as a ‘folder’)
  *
@@ -33,6 +33,10 @@ class Mailbox implements \Countable, \IteratorAggregate
     public function getName()
     {
         return $this->name;
+    }
+
+    public function getDecodedName(){
+        return ImapUtf7::decode($this->name);
     }
 
     /**
