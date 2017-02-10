@@ -17,10 +17,11 @@ is installed. For instance on Debian:
 # apt-get install php5-imap
 ```
 
-The recommended way to install the IMAP library is through [Composer](http://getcomposer.org):
+The recommended way to install the IMAP library is through [Composer](http://getcomposer.org).
 
+Add to composer.json:
 ```json
-add to composer.json
+
     "repositories": [
         {
             "type": "vcs",
